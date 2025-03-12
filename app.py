@@ -57,7 +57,12 @@ def add_book():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+            # Get the last book id and increment it by 1
+            last_book = Book.query.order_by(Book.id.desc()).first()
+            new_id = last_book.id + 1 if last_book else 1
+
             new_book = Book(
+                id=new_id,
                 title=title,
                 author=author,
                 price=float(price),
