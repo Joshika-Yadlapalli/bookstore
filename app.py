@@ -100,16 +100,11 @@ def update_book(book_id):
 
 @app.route('/delete/<int:book_id>', methods=['POST'])
 def delete_book(book_id):
+    #deleting the book
+    
     book = Book.query.get_or_404(book_id)
     db.session.delete(book)
     db.session.commit()
-
-    # Update the IDs of the remaining books
-    books = Book.query.order_by(Book.id).all()
-    for index, book in enumerate(books, start=1):
-        book.id = index
-    db.session.commit()
-
     return redirect(url_for('index'))
 
 @app.route('/rent/<int:book_id>', methods=['GET', 'POST'])
