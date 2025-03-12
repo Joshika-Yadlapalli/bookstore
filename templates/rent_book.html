@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent a Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='rent.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Rent a Book</h1>
+        </header>
+        <div class="container">
+            <form action="{{ url_for('rent_book', book_id=book.id) }}" method="post">
+                <label for="book_id">Book ID:</label>
+                <input type="text" id="book_id" name="book_id" value="{{ book.id }}" readonly><br><br>
+
+                <label for="user_name">User Name:</label>
+                <input type="text" id="user_name" name="user_name" required><br><br>
+
+                <label for="rent_date">Rent Date:</label>
+                <input type="date" id="rent_date" name="rent_date" required><br><br>
+
+                <label for="return_date">Return Date:</label>
+                <input type="date" id="return_date" name="return_date" required><br><br>
+
+                <button type="submit">Rent Book</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

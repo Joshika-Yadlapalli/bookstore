@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Bookstore</h1>
+    <a href="{{ url_for('add_book') }}">Add New Book</a>
+
+    <h2>Search Books</h2>
+    <form method="GET" action="{{ url_for ('index') }}">
+        <input type="text" name="search" placeholder="Search by title" value="{{ search_query }}">
+        <input type="submit" value="Search">
+    </form>
+
+    <h2>Book List</h2>
+    {% if books %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.id}}</td>
+                    <td><img src="{{ url_for('static', filename='uploads/' + book.image) }}" alt="{{ book.title }}" width="50"></td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.price }}</td>
+                    <td>{{ book.stock }}</td>
+                    <td>
+                        <form action="{{ url_for('update_book', book_id=book.id) }}" method="GET" style="display:inline;">
+                            <button type="submit">Update</button>
+                        </form>
+                        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                        <form action="{{ url_for('rent_book', book_id=book.id) }}" method="GET" style="display:inline;">
+                            <button type="submit">Rent</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No books found.</p>
+    {% endif %}
+</body>
+</html>
